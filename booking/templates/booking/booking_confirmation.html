@@ -1,0 +1,52 @@
+{% extends 'booking/index.html' %}
+
+{% block title %}Booking Confirmation{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Booking Confirmed!</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Your booking has been confirmed. Thank you for choosing Cinema Booking!
+                    </div>
+                    
+                    <h4>Booking Details</h4>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Booking ID:</strong> #{{ booking.id }}</p>
+                            <p><strong>Movie:</strong> {{ booking.showtime.movie.title }}</p>
+                            <p><strong>Cinema:</strong> {{ booking.showtime.cinema.name }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Showtime:</strong> {{ booking.showtime.start_time|date:"M d, Y H:i" }}</p>
+                            <p><strong>Theater:</strong> {{ booking.showtime.theater_number }}</p>
+                            <p><strong>Seats:</strong> 
+                                {% for seat in booking.seats.all %}
+                                {{ seat.row }}{{ seat.number }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <h5>Total Paid: ₹{{ booking.total_price }}</h5>
+                    </div>
+                    
+                    <p>An email confirmation has been sent to your registered email address.</p>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
+                        <a href="{% url 'movie_list' %}" class="btn btn-outline-primary ms-2">Book More Tickets</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

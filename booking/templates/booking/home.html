@@ -1,0 +1,57 @@
+{% extends 'booking/index.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold">Welcome to Cineworld</h1>
+        <p class="lead">Book your movie tickets online with ease</p>
+        <a href="{% url 'movie_list' %}" class="btn btn-primary btn-lg mt-3">Browse Movies</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="mb-4">Now Showing</h2>
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-4 mb-4">
+            <div class="card movie-card h-100">
+                <img src="{% if movie.poster %}{{ movie.poster.url }}{% else %}https://placehold.co/300x450?text=No+Image{% endif %}" 
+                     class="card-img-top" alt="{{ movie.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.description|truncatewords:20 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-info">{{ movie.genre }}</span>
+                        <span class="badge bg-warning text-dark">{{ movie.rating }}</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'movie_detail' movie.id %}" class="btn btn-primary btn-sm">View Details & Book</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 class="mb-4 mt-5">Upcoming Showtimes</h2>
+    <div class="row">
+        {% for showtime in upcoming_showtimes %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ showtime.movie.title }}</h5>
+                    <p class="card-text">
+                        <i class="fas fa-building me-2"></i>{{ showtime.cinema.name }}<br>
+                        <i class="fas fa-clock me-2"></i>{{ showtime.start_time|date:"M d, Y H:i" }}<br>
+                        <i class="fas fa-ticket-alt me-2"></i>₹{{ showtime.price }}
+                    </p>
+                    <a href="{% url 'showtime_detail' showtime.id %}" class="btn btn-primary btn-sm">Book Now</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
