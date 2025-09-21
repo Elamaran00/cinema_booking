@@ -134,3 +134,6 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'  
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://cinema-booking-67xd.onrender.com",
+]
