@@ -156,7 +156,7 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Registration successful!')
-            return redirect('task_list')
+            return redirect('home')
     else:
         form = UserRegistrationForm()
     return render(request, 'booking/register.html', {'form': form})
